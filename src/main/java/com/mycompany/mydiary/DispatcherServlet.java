@@ -5,7 +5,6 @@
  */
 package com.mycompany.mydiary;
 
-import com.mycompany.mydiary.model.Post;
 import com.mycompany.mydiary.model.User;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -22,8 +21,8 @@ import org.hibernate.Transaction;
  *
  * @author RENT
  */
-@WebServlet(name = "NewPostServ", urlPatterns = {"/NewPostServ"})
-public class NewPostServ extends HttpServlet {
+@WebServlet(name = "DispatcherServlet", urlPatterns = {"/DispatcherServlet"})
+public class DispatcherServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,21 +36,18 @@ public class NewPostServ extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet NewPostServ</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet NewPostServ at " + request.getContextPath() + "</h1>");
-            //out.println("<p>"+test+"</p>");
-            out.println("</body>");
-            out.println("</html>");
+        SessionFactory instance = ConfigHibernate.getInstance();
+        Session openSession = instance.openSession();
+        Transaction beginTransaction = openSession.beginTransaction();
+        User user = new User();
+        user.setFirstname("Adrian");
+        user.setLastname("Kozlowski");
+        openSession.save(user);
+        beginTransaction.commit();
+        request.getRequestDispatcher("/index.jsp").forward(request, response);
+
         }
-    }
+    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -79,26 +75,7 @@ public class NewPostServ extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //processRequest(request, response);
-        
-        String test = request.getParameter("title");
-        
-        
-        SessionFactory instance = ConfigHibernate.getInstance();
-        Session openSession = instance.openSession();
-        Transaction beginTransaction = openSession.beginTransaction();
-        User user = new User();
-        Post post = new Post();
-        user.setFirstname(request.getParameter("firstname"));
-        user.setLastname(request.getParameter("lastname"));
-        user.setNick(request.getParameter("nick"));
-        post.setTitle(request.getParameter("title"));
-        post.setText(request.getParameter("content"));
-        post.setUser(user);
-        openSession.save(post);
-        beginTransaction.commit();
-        request.getRequestDispatcher("/index.jsp").forward(request, response);
-        
+        processRequest(request, response);
     }
 
     /**

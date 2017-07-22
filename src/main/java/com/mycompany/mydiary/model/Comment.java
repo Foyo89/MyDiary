@@ -32,29 +32,22 @@ public class Comment implements Serializable {
     private Integer id;
     @Column(name = "nick")
     private String nick;
-    @Column(name = "emal")
+    @Column(name = "email")
     private String email;
     @ManyToOne
     @JoinColumn(name = "postid")
     private Post post;
-    @OneToMany(mappedBy = "post")
-    private Set<Comment> comments;
+    
 
     public void setPost(Post post) {
         this.post = post;
     }
 
-    public void setComments(Set<Comment> comments) {
-        this.comments = comments;
-    }
 
     public Post getPost() {
         return post;
     }
 
-    public Set<Comment> getComments() {
-        return comments;
-    }
     
     public void setEmail(String email) {
         this.email = email;

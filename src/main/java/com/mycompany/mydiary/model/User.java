@@ -7,6 +7,7 @@ package com.mycompany.mydiary.model;
 
 import java.io.Serializable;
 import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -35,11 +36,10 @@ public class User implements Serializable {
     private String lastname;
     @Column
     private String nick;
-    @OneToMany(mappedBy = "post")
+    
+    @OneToMany(mappedBy = "user")
     private Set<Post> posts;
-    @ManyToOne
-    @JoinColumn(name = "postid")
-    private Post post;
+    
 
     public void setFirstname(String firstname) {
         this.firstname = firstname;
@@ -55,10 +55,6 @@ public class User implements Serializable {
 
     public void setPosts(Set<Post> posts) {
         this.posts = posts;
-    }
-
-    public void setPost(Post post) {
-        this.post = post;
     }
 
     public static long getSerialVersionUID() {
@@ -79,10 +75,6 @@ public class User implements Serializable {
 
     public Set<Post> getPosts() {
         return posts;
-    }
-
-    public Post getPost() {
-        return post;
     }
 
     public Integer getId() {
