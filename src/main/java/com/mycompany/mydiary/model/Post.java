@@ -8,6 +8,7 @@ package com.mycompany.mydiary.model;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -43,7 +44,7 @@ public class Post implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date editDate;
     
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "userid")
     private User user; 
     

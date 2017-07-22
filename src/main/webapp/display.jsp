@@ -1,20 +1,31 @@
+<%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div class="row">
 
         <div class="col-sm-8 blog-main">
 
-          <div class="blog-post">
+          
+          
+            <div class="blog-post">
             <h2 class="blog-post-title">Sample blog post</h2>
             <p class="blog-post-meta">January 1, 2014 by <a href="#">Mark</a></p>
-            <form action="/MyDiary/NewPostServ" method="POST">
-                <input type="text" name="firstname" value="Imię" size="80"/>
-                <input type="text" name="lastname" value="Nazwisko" size="80"/>
-                <input type="text" name="nick" value="nick" size="80"/>
-                <input type="text" name="title" value="Tytuł" size="80"/></p>
-                <textarea name="content" rows="40" cols="80">
-                </textarea>
-                <input type="submit" value="Wyślij" />
-            </form>
+             <%=request.getAttribute("posts") %>
+             
+             
+            <% List list = (List)request.getAttribute("posts"); %>
+            <%= list%>
+            <p></p>
+            
+            
+            <c:forEach items="${posts}" var="post">
+                    <div class="blog-post">
+                        <h2 class="blog-post-title"><c:out value="${post.title}"/></h2>
+                        <p class="blog-post-meta"><c:out value="${post.createDate}"/> <a href="#">Adrian</a></p>
+                        <p><c:out value="${post.text}"></c:out></p>
+                    </div><!-- /.blog-post -->
+                    </c:forEach>
+
 
             
           </div><!-- /.blog-post -->
