@@ -12,6 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -38,6 +39,17 @@ public class Post implements Serializable {
     @Column(name = "editdate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date editDate;
+    
+    @OneToMany(mappedBy = "userid")
+    private User user; 
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public User getUser() {
+        return user;
+    }
 
     public void setTitle(String title) {
         this.title = title;

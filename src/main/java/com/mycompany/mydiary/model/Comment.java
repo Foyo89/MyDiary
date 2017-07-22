@@ -7,11 +7,15 @@ package com.mycompany.mydiary.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -30,7 +34,28 @@ public class Comment implements Serializable {
     private String nick;
     @Column(name = "emal")
     private String email;
+    @ManyToOne
+    @JoinColumn(name = "postid")
+    private Post post;
+    @OneToMany(mappedBy = "post")
+    private Set<Comment> comments;
 
+    public void setPost(Post post) {
+        this.post = post;
+    }
+
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
+    }
+
+    public Post getPost() {
+        return post;
+    }
+
+    public Set<Comment> getComments() {
+        return comments;
+    }
+    
     public void setEmail(String email) {
         this.email = email;
     }
