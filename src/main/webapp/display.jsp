@@ -1,6 +1,7 @@
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <div class="row">
 
         <div class="col-sm-8 blog-main">
@@ -8,26 +9,19 @@
           
           
             <div class="blog-post">
-            <h2 class="blog-post-title">Sample blog post</h2>
-            <p class="blog-post-meta">January 1, 2014 by <a href="#">Mark</a></p>
-             <%=request.getAttribute("posts") %>
-             
-             
-            <% List list = (List)request.getAttribute("posts"); %>
-            <%= list%>
-            <p></p>
             
-            
-            <c:forEach items="${posts}" var="post">
-                    <div class="blog-post">
-                        <h2 class="blog-post-title"><c:out value="${post.title}"/></h2>
-                        <p class="blog-post-meta"><c:out value="${post.createDate}"/> <a href="#">Adrian</a></p>
-                        <p><c:out value="${post.text}"></c:out></p>
-                    </div><!-- /.blog-post -->
-                    </c:forEach>
-
-
-            
+                <c:choose>
+                    <c:when test="${param.menu == 'new'}">
+                        <%@include file="showposts.jsp" %>
+                    </c:when>
+                    <c:when test="${param.menu == 'newpost'}">
+                        <%@include file="newpost.jsp" %>
+                    </c:when>
+                    
+                
+                </c:choose>
+                
+              
           </div><!-- /.blog-post -->
 
           

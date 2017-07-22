@@ -1,7 +1,13 @@
+<%@page import="java.util.Date"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <div class="sidebar-module">
             <h4>Archives</h4>
+            <% Date date = new Date(); %>
+            
             <ol class="list-unstyled">
+                
               <li><a href="#">March 2014</a></li>
               <li><a href="#">February 2014</a></li>
               <li><a href="#">January 2014</a></li>
