@@ -16,7 +16,7 @@
         <%@include file="header.jsp"%>
 
         <%@include file="display.jsp" %>
-        <h1>ęążó</h1>
+        
         <%@include file="sidebar.jsp" %>
 
     <%@include file="footer.jsp" %>
