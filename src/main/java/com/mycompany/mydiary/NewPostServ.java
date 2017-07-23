@@ -10,11 +10,13 @@ import com.mycompany.mydiary.model.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -82,17 +84,32 @@ public class NewPostServ extends HttpServlet {
             throws ServletException, IOException {
         //processRequest(request, response);
         
-        String test = request.getParameter("title");
-        
-        
-        SessionFactory instance = ConfigHibernate.getInstance();
-        Session openSession = instance.openSession();
-        Transaction beginTransaction = openSession.beginTransaction();
         User user = new User();
         Post post = new Post();
-        user.setFirstname(request.getParameter("firstname"));
-        user.setLastname(request.getParameter("lastname"));
-        user.setNick(request.getParameter("nick"));
+        
+        SessionFactory instance = ConfigHibernate.getInstance();
+        Session session = instance.openSession();
+        
+        Query query = session.createQuery("from User where nick='"+request.getParameter("nick")+"'");
+        List<User> list = query.list();
+        
+        if(!list.isEmpty()){
+            user = list.stream().findFirst().get();
+        }
+        else
+        {
+            user.setFirstname(request.getParameter("firstname"));
+            user.setLastname(request.getParameter("lastname"));
+            user.setNick(request.getParameter("nick"));
+        }
+        
+        session.close();
+        
+        //SessionFactory instance = ConfigHibernate.getInstance();
+        Session openSession = instance.openSession();
+        Transaction beginTransaction = openSession.beginTransaction();
+        
+        
         post.setTitle(request.getParameter("title"));
         post.setText(request.getParameter("content"));
         post.setCreateDate(new Date());
