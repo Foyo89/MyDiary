@@ -1,26 +1,24 @@
+<%@page import="java.util.Enumeration"%>
+<%@page import="java.util.List"%>
 <%@page import="java.util.Date"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix ="fn" uri = "http://java.sun.com/jsp/jstl/functions" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <div class="sidebar-module">
-            <h4>Archives</h4>
-            <% Date date = new Date(); %>
+            <h4>Archiwum</h4>
             
-            <ol class="list-unstyled">
+           <ol class="list-unstyled">
+            <c:forEach items="${archive}" var="element">
+               
+                <fmt:parseDate type="date" value="${element}" pattern="yyyy-MM" var="parsedDate"/>
+                <c:set var="tosplit" value="${element}"/>
+                <c:set var="spliter" value="${fn:split(tosplit, '-')}"/>
                 
-              <li><a href="#">March 2014</a></li>
-              <li><a href="#">February 2014</a></li>
-              <li><a href="#">January 2014</a></li>
-              <li><a href="#">December 2013</a></li>
-              <li><a href="#">November 2013</a></li>
-              <li><a href="#">October 2013</a></li>
-              <li><a href="#">September 2013</a></li>
-              <li><a href="#">August 2013</a></li>
-              <li><a href="#">July 2013</a></li>
-              <li><a href="#">June 2013</a></li>
-              <li><a href="#">May 2013</a></li>
-              <li><a href="#">April 2013</a></li>
-            </ol>
+                <li><a href="/MyDiary/ShowArchiveServlet?year=${spliter[0]}&month=${spliter[1]}"><fmt:formatDate type="date" value="${parsedDate}" pattern="MMM yyyy"/></a></li>
+            </c:forEach>
+            </ol>    
+            
           </div>
           <div class="sidebar-module">
             <h4>Elsewhere</h4>
